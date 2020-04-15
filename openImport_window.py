@@ -15,8 +15,6 @@ import maya.OpenMaya as om
 import maya.cmds as cmds
 
 
-
-
 def get_maya_main_window():
 
     maya_main_wnd = omui.MQtUtil.mainWindow()
@@ -26,6 +24,24 @@ class TestUIWindow(QtWidgets.QDialog):
 
     FILE_FILTERS = 'Maya(*.ma *mb);;Maya ASCII(*.ma);;Maya Binary(*.mb);;All Files(*.*)'
     selected_filter = 'Maya(*.ma *.mb)'
+
+    dialog_instance = None
+
+    @classmethod
+    def show_dialog(cls):
+        '''
+
+        :return:
+        '''
+        if not cls.dialog_instance:
+            cls.dialog_instance = TestUIWindow()
+
+        if cls.dialog_instance.isHidden():
+            cls.dialog_instance.show()
+        else:
+            cls.dialog_instance.raise_()
+            cls.dialog_instance.activateWindow()
+
 
     def __init__(self, parent = get_maya_main_window()):
         super(TestUIWindow, self).__init__(parent)
